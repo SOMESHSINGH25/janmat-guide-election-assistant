@@ -1,0 +1,120 @@
+.quiz-section {
+  padding: 80px 20px;
+}
+
+.quiz-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.question-section {
+  margin-bottom: 30px;
+}
+
+.question-count {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.question-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  line-height: 1.4;
+}
+
+.answer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.answer-btn {
+  width: 100%;
+  text-align: left;
+  padding: 15px 20px;
+  font-size: 1.1rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(18, 33, 74, 0.1);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  color: var(--text-dark);
+}
+
+.answer-btn:hover:not(:disabled) {
+  background-color: rgba(18, 33, 74, 0.05);
+  border-color: var(--primary-color);
+  transform: translateX(5px);
+}
+
+.answer-btn:disabled {
+  cursor: default;
+}
+
+.answer-btn.correct {
+  background-color: rgba(19, 136, 8, 0.1);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
+.answer-btn.incorrect {
+  background-color: rgba(255, 95, 86, 0.1);
+  border-color: #ff5f56;
+  color: #ff5f56;
+}
+
+.explanation-box {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: rgba(32, 178, 170, 0.1);
+  border-left: 4px solid var(--secondary-teal);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--text-dark);
+}
+
+.next-action {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.score-section {
+  padding: 20px;
+}
+
+.score-display {
+  font-size: 1.5rem;
+  margin: 20px 0;
+  color: var(--text-muted);
+}
+
+.highlight-score {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.score-message {
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+.mt-4 {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .quiz-container {
+    padding: 20px;
+  }
+}
