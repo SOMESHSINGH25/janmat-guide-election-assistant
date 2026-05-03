@@ -91,3 +91,20 @@
     display: none; /* simple mobile state */
   }
 }
+
+/* Right-side cluster: language toggle + user info */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 500px) {
+  .user-greeting { display: none; }
+}
