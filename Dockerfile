@@ -1,19 +1,27 @@
-# Stage 1: Build the React application
-FROM node:20-alpine AS build
+# ── Stage 1: Build the Vite frontend ──────────────────────────────────────
+FROM node:20-alpine AS builder
 WORKDIR /app
+
 COPY package*.json ./
-RUN npm install
+RUN npm ci
+
 COPY . .
-RUN npm run build
+RUN npm run build          # outputs to /app/dist
 
-# Stage 2: Serve the application with Nginx
-FROM nginx:alpine
-# Copy custom Nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-# Copy built assets from the build stage
-COPY --from=build /app/dist /usr/share/nginx/html
+# ── Stage 2: Production runtime (Express serves API + static files) ────────
+FROM node:20-alpine
+WORKDIR /app
 
-# Expose port 8080 for Cloud Run
+# Copy only what the server needs at runtime
+COPY --from=builder /app/package*.json ./
+RUN npm ci --only=production
+
+COPY --from=builder /app/dist ./dist
+COPY server ./server
+
+# Cloud Run injects $PORT at runtime (defaults to 8080)
+ENV PORT=8080
 EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"]
+# Do NOT copy .env — GEMINI_API_KEY comes from Cloud Run env vars
+CMD ["node", "server/index.js"]

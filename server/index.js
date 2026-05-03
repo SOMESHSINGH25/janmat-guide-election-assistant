@@ -2,11 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
@@ -128,6 +130,17 @@ If the language code is 'hi', reply in Hindi. If 'hinglish', reply in Hinglish (
     console.error("--------------------------------\n");
     res.status(500).json({ error: 'Failed to fetch response from Gemini API. Our servers are currently experiencing issues.' });
   }
+});
+
+// ── Serve the Vite-built frontend ──────────────────────────────────────────
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const distPath = path.join(__dirname, '..', 'dist');
+
+app.use(express.static(distPath));
+
+// SPA fallback — all non-API routes return index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 app.listen(port, () => {
